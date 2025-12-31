@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GalaxyDrive | Local Food Guide</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, Arial, sans-serif;
+  background:#f3f5f7;
+}
+header{
+  background:linear-gradient(135deg,#4b0082,#2563eb);
+  color:white;
+  padding:28px;
+  text-align:center;
+}
+header h1{margin:0;font-size:38px;}
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:20px;
+}
+.area-title{
+  margin-top:45px;
+  font-size:28px;
+  color:#1e3a8a;
+  border-left:6px solid #2563eb;
+  padding-left:12px;
+}
+.hotel{
+  background:white;
+  border-radius:14px;
+  padding:22px;
+  margin-top:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.hotel-head{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.rating{
+  background:#ecfeff;
+  color:#0369a1;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:14px;
+}
+.meta{
+  font-size:14px;
+  color:#555;
+  margin:6px 0;
+}
+.special{
+  background:#fff7ed;
+  border-left:4px solid #fb923c;
+  padding:10px;
+  margin:10px 0;
+}
+.menu h4{
+  margin:12px 0 6px;
+  border-bottom:1px solid #e5e7eb;
+}
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  padding:5px 0;
+}
+.price{color:#047857;font-weight:600;}
+.book{
+  margin-top:14px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+}
+#searchInput:hover{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 6px rgba(37,99,235,0.4);
+}
+
+.book:hover{background:#1e40af;}
+.about{
+  margin-top:60px;
+  background:white;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.team{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+}
+.member{
+  background:#eef2ff;
+  padding:18px;
+  text-align:center;
+  border-radius:12px;
+}
+.member i{
+  font-size:36px;
+  color:#4b0082;
+  margin-bottom:10px;
+}
+footer{
+  margin-top:40px;
+  background:#1e293b;
+  color:white;
+  text-align:center;
+  padding:16px;
+}
+.map-btn{
+  margin-left:10px;
+  background:#16a34a;
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+.map-btn:hover{
+  background:#15803d;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SPOT FINDER</h1>
+  <p>Grouped Local Restaurants & Clear Menus</p>
+</header>
+<div class="container">
+  <input 
+    type="text" 
+    id="searchInput"
+    placeholder="Search hotel, area, or food..."
+    style="
+      width:100%;
+      padding:12px;
+      font-size:16px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      margin-bottom:20px;
+    "
+  />
+</div>
+
+
+<div class="container" id="output"></div>
+
+<div class="container">
+  <div class="about">
+    <h2>About Us</h2>
+    <p>
+      <strong>GalaxyDrive is a student-driven team focused on building practical, user-friendly digital solutions that solve real-world problems. Our goal is to combine clean design with simple technology to create applications that are easy to use and genuinely helpful for everyday users.
+    </p><br>
+    <p>Future Vision:</p>
+    <p>In the future, GalaxyDrive aims to grow into a unified platform that promotes both tourism and local food culture. Along with food spots and restaurant menus, we plan to include nearby tourist attractions such as temples, waterfalls, viewpoints, heritage places, and popular hangout locations.
+Users will be able to explore a location and see what to visit and where to eat in one place. For tourists and new visitors, this will make trip planning easier by providing spot timings, best visiting hours, food recommendations, and direct Google Maps navigation.</p>
+
+    
+    <div class="team">
+      <div class="member"><i class="fas fa-code"></i><h4>Sarath</h4></div>
+      <div class="member"><i class="fas fa-laptop-code"></i><h4>Hariharan</h4></div>
+      <div class="member"><i class="fas fa-lightbulb"></i><h4>Hemalatha</h4></div>
+      <div class="member"><i class="fas fa-brain"></i><h4>Kanika Shree</h4></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+© 2025 GalaxyDrive | Built by Students | A startup Journey <br>
+Contact: sarathdec2007@gmail.com | 9715461134 
+</footer>
+
+<script>
+
+const restaurantData = {
+  "Tatabad":[
+{
+name:"Hotel Anandhas", rating:"4.3 / 5", hours:"6:30 AM – 10:30 PM",
+special:"South Indian Full Meals",
+  address:"Tatabad Main Road, Coimbatore, Tamil Nadu 641012",
+menu:{
+Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+Lunch:[["Full Meals",120],["Variety Rice",80]],
+Dinner:[["Chapathi",45],["Uthappam",60]]
+}
+},
+{
+name:"Hotel Geetha Canteen", rating:"4.1 / 5", hours:"7:00 AM – 4:00 PM",
+address:"Near Tatabad Bus Stop Coimbatore, Tamil Nadu 641012",
+special:"Veg Meals",
+menu:{
+Breakfast:[["Idli",25],["Dosa",35]],
+Lunch:[["Veg Meals",80],["Curd Rice",50]]
+}
+},
+{
+name:"Hotel Sri Annapoorna", rating:"4.5 / 5", hours:"6:30 AM – 10:30 PM",
+special:"South Indian Full Meals",
+address:"Tatabad Main Road,coimbatore,TamilNadu 641012",
+menu:{
+Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+Lunch:[["Full Meals",120],["Sambar Rice",80]],
+Dinner:[["Chapathi",45],["Dosa",50]]
+}
+},
+{
+name:"Hotel Sri Shanmuga Vilas", rating:"3.9 / 5", hours:"7:00 AM – 10:00 PM",
+special:"South Indian Tiffin",
+address: "Tatabad Inner Road, Coimbatore, Tamil Nadu 641012",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40],["Pongal",45]],
+Lunch:[["Meals",90]],
+Dinner:[["Chapathi",40],["Parotta",15]]
+}
+},
+{
+    name:"Hotel Aryas" , rating:"4.0 / 5" , hours:"6.30 AM - 10.30 PM",
+    special:"Veg Meals",
+    address : " Tatabad Signal Road, Coimbatore, Tamil Nadu 641012",
+    menu:{
+        Breakfast:[["Idli",30],["Dosa",45],["Poori",45]],
+        Lunch:[["Vegmeals",110],["CurdRice",70]],
+        Dinner:[["Chapathi" ,45],["Uthappam" ,60]
+]
+    }
+}
+],
+
+  "Peelamedu": [
+    {
+      name: "Hotel Jump In and Out",
+      rating: "4.1 / 5",
+      hours: "11:00 AM – 11:00 PM",
+      special: "Chicken Burger & Fried Rice",
+      address:"Peelamedu Main road,Coimbatore,Tamilnadu 641004",
+      menu: {
+        Lunch: [["Chicken Fried Rice",140],["Veg Fried Rice",120]],
+        Dinner: [["Chicken Burger",150],["Chicken Noodles",160]]
+      }
+    },
+    {
+      name: "Kovai Biriyani Hotel",
+      rating: "4.0 / 5",
+      hours: "11:00 AM – 10.30 PM",
+      special: "Chicken Biriyani",
+      address : "Peelamedu Bus Stop Area,Coimbatore,Tamilnadu 641004",
+      menu: {
+        Lunch: [["Chicken Biriyani",150],["Mutton Biriyani",220]],
+        Dinner: [["parotta",15],["Chicken curry",160]]
+      }
+    },
+    {
+  name:"Hotel Sri Krishna Vilas",
+  rating:"3.8 / 5",
+  address:"Near Peelamedu Signal, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40],["Pongal",45]],
+    Lunch:[["Meals",90]],
+    Dinner:[["Chapathi",40],["Parotta",15]]
+  }
+},
+{
+  name:"Hotel Sree Annapoorna",
+  rating:"4.5 / 5",
+  address:"Avinashi Road, Peelamedu, Coimbatore, Tamil Nadu 641004",
+  hours:"6:30 AM – 10:30 PM",
+  special:"South Indian Full Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+    Lunch:[["Full Meals",120],["Variety Rice",80]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Arya Bhavan",
+  rating:"4.0 / 5",
+  address:"Peelamedu Inner Road, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 10:30 PM",
+  special:"Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Poori",45]],
+    Lunch:[["Veg Meals",110],["Curd Rice",70]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Geetha Canteen",
+  rating:"4.1 / 5",
+  address:"Near Peelamedu Bus Stop, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 4:00 PM",
+  special:"Veg Meals",
+  menu:{
+    Breakfast:[["Idli",25],["Dosa",35]],
+    Lunch:[["Veg Meals",80],["Curd Rice",50]]
+  }
+},
+{
+  name:"Hotel Junior Kuppanna",
+  rating:"4.4 / 5",
+  address:"Avinashi Road, Peelamedu, Coimbatore, Tamil Nadu 641004",
+  hours:"11:30 AM – 11:00 PM",
+  special:"Mutton Biriyani",
+  menu:{
+    Lunch:[["Chicken Biriyani",240],["Mutton Biriyani",340]],
+    Dinner:[["Parotta",20],["Pepper Chicken",260],["Chicken Chukka",240]]
+  }
+},
+{
+  name:"Hotel Sri Saravana Bhavan",
+  rating:"4.2 / 5",
+  address:"Peelamedu Main Road, Coimbatore, Tamil Nadu 641004",
+  hours:"6:30 AM – 10:30 PM",
+  special:"South Indian Full Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+    Lunch:[["Full Meals",120],["Variety Rice",80]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Sri Lakshmi Mess",
+  rating:"4.3 / 5",
+  address:"Peelamedu Market Area, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 3:00 PM",
+  special:"Veg Meals",
+  menu:{
+    Lunch:[["Veg Meals",80],["Sambar Rice",70]]
+  }
+},
+{
+  name:"Hotel Anandas",
+  rating:"4.3 / 5",
+  address:"Peelamedu Signal Area, Coimbatore, Tamil Nadu 641004",
+  hours:"6:30 AM – 10:30 PM",
+  special:"South Indian Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50]],
+    Lunch:[["Full Meals",120],["Variety Rice",80]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+}
+
+  ],
+
+  "Singanallur":[
+{
+name:"Hotel Kandha", rating:"3.8 / 5", hours:"10:00 AM – 11:00 PM",
+special:"Chicken Biriyani",
+address : "No 434 & 435, Trichy Road, Agraharam, Singanallur, Coimbatore, Tamil Nadu 641005 ",
+menu:{
+Breakfast:[["Idli",35],["Dosa",45],["Pongal",50]],
+Lunch:[["Chicken Biriyani",160],["Veg Meals",90]],
+Dinner:[["Parotta",18],["Chicken 65",130]]
+}
+},
+{
+name:"Hotel Arya Bhavan", rating:"4.0 / 5", hours:"6:30 AM – 10:00 PM",
+special:"Mini Tiffin",
+address : "Trichy Road, Singanallur, Coimbatore, Tamil Nadu 641005",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40],["Pongal",45]],
+Lunch:[["Veg Meals",90],["Curd Rice",60]],
+Dinner:[["Chapathi",40],["Parotta",15]]
+}
+},
+{
+  name:"Hotel Geetha Canteen",
+  rating:"4.3 / 5",
+  address:"Geetha Canteen, Singanallur, Coimbatore, Tamil Nadu 641005",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin & Filter Coffee",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40],["Vada",30]],
+    Lunch:[["Veg Meals",80],["Curd Rice",60]],
+    Dinner:[["Chapathi",40],["Parotta",15]]
+  }
+},
+{
+  name:"Hotel Junior Kuppanna",
+  rating:"4.4 / 5",
+  address:"Trichy Road, Singanallur, Coimbatore, Tamil Nadu 641005",
+  hours:"11:00 AM – 10:30 PM",
+  special:"Mutton Biriyani",
+  menu:{
+    Lunch:[["Chicken Biriyani",190],["Mutton Biriyani",240]],
+    Dinner:[["Parotta",20],["Chicken Curry",150]]
+  }
+},
+{
+  name:"Hotel Sri Shanmuga Vilas",
+  rating:"3.9 / 5",
+  address:"Singanallur Main Road, Coimbatore, Tamil Nadu 641005",
+  hours:"7:00 AM – 9:30 PM",
+  special:"Ghee Roast Dosa",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",50]],
+    Lunch:[["Veg Meals",90],["Tomato Rice",70]],
+    Dinner:[["Parotta",15],["Chapathi",40]]
+  }
+},
+{
+  name:"Hotel Sri Lakshmi Mess",
+  rating:"3.7 / 5",
+  address:"Singanallur Inner Street, Coimbatore, Tamil Nadu 641005",
+  hours:"7:30 AM – 3:30 PM",
+  special:"Plain Veg Meals",
+  menu:{
+    Breakfast:[["Idli",25],["Dosa",35]],
+    Lunch:[["Veg Meals",75],["Curd Rice",45]]
+  }
+},
+{
+  name:"Hotel Anandas",
+  rating:"4.5 / 5",
+  address:"Trichy Road, Singanallur, Coimbatore, Tamil Nadu 641005",
+  hours:"6:30 AM – 10:30 PM",
+  special:"Masala Dosa",
+  menu:{
+    Breakfast:[["Idli",30],["Masala Dosa",65]],
+    Lunch:[["Veg Meals",120],["Variety Rice",85]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Velmurugan Mess",
+  rating:"3.8 / 5",
+  address:"Singanallur Inner Road, Coimbatore, Tamil Nadu 641005",
+  hours:"8:00 AM – 4:00 PM",
+  special:"Country Veg Meals",
+  menu:{
+    Breakfast:[["Idli",25],["Dosa",35]],
+    Lunch:[["Veg Meals",80],["Rasam Rice",60]]
+  }
+}
+
+],
+"Kovaipudur & Nearby":[
+{
+name:"Hotel Annapoorna Mess", rating:"3.9 / 5", hours:"7:00 AM – 3:00 PM",
+special:"Veg Meals",
+address : " V-Block, Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40]],
+Lunch:[["Veg Meals",80],["Curd Rice",60]]
+}
+},
+{
+name:"Hotel Sri Lakshmi Mess", rating:"3.9 / 5", hours:"7:00 AM – 3:00 PM",
+special:"Country Style Veg Meals",
+address : "V-Block, Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042 ",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40]],
+Lunch:[["Veg Meals",85],["Rasam Rice",60]]
+}
+},
+{
+  name:"Hotel Aaryas",
+  rating:"3.7 / 5",
+  address:"Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50]],
+    Lunch:[["Veg Meals",95],["Chapathi",45]],
+    Dinner:[["Parotta",18],["Fried Rice",100]]
+  }
+},
+{
+  name:"Hotel Sri Krishna Vilas",
+  rating:"4.0 / 5",
+  address:"Near Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"Ghee Roast Dosa",
+  menu:{
+    Breakfast:[["Idli",35],["Ghee Roast",70]],
+    Lunch:[["Veg Meals",100],["Tomato Rice",75]],
+    Dinner:[["Chapathi",45],["Parotta",18]]
+  }
+},
+{
+  name:"Hotel Raja Mess",
+  rating:"4.3 / 5",
+  address:"Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 3:30 PM",
+  special:"Home-style Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",90],["Curd Rice",60]]
+  }
+},
+{
+  name:"Hotel Ganapathy Vilas",
+  rating:"3.8 / 5",
+  address:"Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"Vegetarian Tiffin Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45]],
+    Lunch:[["Veg Meals",90],["Sambar Rice",70]],
+    Dinner:[["Parotta",18],["Chapathi",40]]
+  }
+},
+{
+  name:"Hotel Sree Velmurugan",
+  rating:"3.9 / 5",
+  address:"Kovaipudur Inner Road, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin",
+  menu:{
+    Breakfast:[["Idli",30],["Pongal",45]],
+    Lunch:[["Veg Meals",95],["Tomato Rice",70]],
+    Dinner:[["Chapathi",40],["Parotta",15]]
+  }
+},
+{
+  name:"Hotel Kongu Mess",
+  rating:"3.6 / 5",
+  address:"Opp KVB Bank, Chinniyampalayam, Coimbatore, Tamil Nadu 641048",
+  hours:"7:00 AM – 11:00 PM",
+  special:"Kongu Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",90],["Curd Rice",60]],
+    Dinner:[["Parotta",18],["Chapathi",40]]
+  }
+},
+{
+  name:"Hotel Sri Murugan Mess",
+  rating:"4.7 / 5",
+  address:"Ramaswamy Nagar Rd, Perur Chettipalayam, Coimbatore, Tamil Nadu 641010",
+  hours:"7:00 AM – 3:00 PM",
+  special:"Traditional Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",85],["Rasam Rice",60]]
+  }
+},
+{
+  name:"Hotel Udhayam Mess",
+  rating:"4.0 / 5",
+  address:"Opposite Petrol Bunk, Kamarajar Rd, Coimbatore, Tamil Nadu 641015",
+  hours:"7:00 AM – 10:00 PM",
+  special:"Mixed Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",90],["Tomato Rice",70]],
+    Dinner:[["Parotta",18],["Chapathi",40]]
+  }
+}
+
+]
+};
+
+
+const outputDiv = document.getElementById("output");
+
+for (let areaName in restaurantData) {
+
+ 
+  const areaTitle = document.createElement("div");
+  areaTitle.className = "area-title";
+  areaTitle.innerText = areaName;
+  outputDiv.appendChild(areaTitle);
+
+
+  restaurantData[areaName].forEach(function(hotel){
+
+    let menuHTML = "";
+
+ 
+    for (let section in hotel.menu) {
+      menuHTML += "<div class='menu'><h4>" + section + "</h4>";
+
+      hotel.menu[section].forEach(function(item){
+        menuHTML +=
+          "<div class='menu-item'>" +
+          "<span>" + item[0] + "</span>" +
+          "<span class='price'>₹" + item[1] + "</span>" +
+          "</div>";
+      });
+
+      menuHTML += "</div>";
+    }
+    const hotelCard = document.createElement("div");
+hotelCard.className = "hotel";
+hotelCard.setAttribute("data-name", hotel.name.toLowerCase());
+
+    hotelCard.innerHTML = `
+      <div class="hotel-head">
+        <h3>${hotel.name}</h3>
+        <span class="rating">⭐ ${hotel.rating}</span>
+      </div>
+      <div class="meta"><i class="fas fa-clock"></i> ${hotel.hours}</div>
+        <div class="meta">
+    <div class="meta">
+  <i class="fas fa-location-dot"></i> ${hotel.address}
+</div>
+
+  </div>
+      <div class="special"><strong>Special:</strong> ${hotel.special}</div>
+      ${menuHTML}
+      <div style="margin-top:14px;">
+  <button class="book">Book Now</button>
+  <button class="map-btn">View on Map</button>
+</div>
+
+    `;
+
+   
+    hotelCard.querySelector(".book").onclick = function(){
+      const confirmBooking = confirm("Do you want to book a table at " + hotel.name + "?");
+      if(confirmBooking){
+        alert("Thank you! Booking feature will be enabled soon.");
+      }
+    };
+    hotelCard.querySelector(".map-btn").onclick = function(){
+      const confirmBooking = confirm("Do U Want to see the location in G-map for " + hotel.name + "?");
+      if(confirmBooking){
+      
+        window.open(
+  "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(hotel.address),
+  "_blank"
+);
+
+      }
+    };
+    outputDiv.appendChild(hotelCard);
+  });
+}
+//search bar functioning is written in js
+document.getElementById("searchInput").addEventListener("keyup", function () {
+
+  const searchValue = this.value.toLowerCase();
+  const allHotels = document.querySelectorAll(".hotel");
+
+  allHotels.forEach(function(hotel){
+    const hotelName = hotel.getAttribute("data-name");
+
+    if (hotelName.includes(searchValue)) {
+      hotel.style.display = "block";
+    } else {
+      hotel.style.display = "none";
+    }
+  });
+
+});
+
+</script>
+
+</body>
+</html>
