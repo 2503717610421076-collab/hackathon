@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GalaxyDrive | Local Food Guide</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+body{
+  margin:0;
+  font-family:Segoe UI, Arial, sans-serif;
+  background:#f3f5f7;
+}
+header{
+  background:linear-gradient(135deg,#4b0082,#2563eb);
+  color:white;
+  padding:28px;
+  text-align:center;
+}
+header h1{margin:0;font-size:38px;}
+.container{
+  max-width:1250px;
+  margin:auto;
+  padding:20px;
+}
+.area-title{
+  margin-top:45px;
+  font-size:28px;
+  color:#1e3a8a;
+  border-left:6px solid #2563eb;
+  padding-left:12px;
+}
+.hotel{
+  background:white;
+  border-radius:14px;
+  padding:22px;
+  margin-top:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.hotel-head{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.rating{
+  background:#ecfeff;
+  color:#0369a1;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:14px;
+}
+.meta{
+  font-size:14px;
+  color:#555;
+  margin:6px 0;
+}
+.special{
+  background:#fff7ed;
+  border-left:4px solid #fb923c;
+  padding:10px;
+  margin:10px 0;
+}
+.menu h4{
+  margin:12px 0 6px;
+  border-bottom:1px solid #e5e7eb;
+}
+.menu-item{
+  display:flex;
+  justify-content:space-between;
+  padding:5px 0;
+}
+.price{color:#047857;font-weight:600;}
+.book{
+  margin-top:14px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  cursor:pointer;
+}
+#searchInput:hover{
+  outline:none;
+  border-color:#2563eb;
+  box-shadow:0 0 6px rgba(37,99,235,0.4);
+}
+
+.book:hover{background:#1e40af;}
+.about{
+  margin-top:60px;
+  background:white;
+  padding:30px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.team{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+}
+.member{
+  background:#eef2ff;
+  padding:18px;
+  text-align:center;
+  border-radius:12px;
+}
+.member i{
+  font-size:36px;
+  color:#4b0082;
+  margin-bottom:10px;
+}
+footer{
+  margin-top:40px;
+  background:#1e293b;
+  color:white;
+  text-align:center;
+  padding:16px;
+}
+.map-btn{
+  margin-left:10px;
+  background:#16a34a;
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+.map-btn:hover{
+  background:#15803d;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SPOT FINDER</h1>
+  <p>Grouped Local Restaurants & Clear Menus</p>
+</header>
+<div class="container">
+  <input 
+    type="text" 
+    id="searchInput"
+    placeholder="Search hotel, area, or food..."
+    style="
+      width:100%;
+      padding:12px;
+      font-size:16px;
+      border-radius:8px;
+      border:1px solid #ccc;
+      margin-bottom:20px;
+    "
+  />
+</div>
+
+
+<div class="container" id="output"></div>
+
+<div class="container">
+  <div class="about">
+    <h2>About Us</h2>
+    <p>
+      <strong>GalaxyDrive is a student-driven team focused on building practical, user-friendly digital solutions that solve real-world problems. Our goal is to combine clean design with simple technology to create applications that are easy to use and genuinely helpful for everyday users.
+    </p><br>
+    <p>Future Vision:</p>
+    <p>In the future, GalaxyDrive aims to grow into a unified platform that promotes both tourism and local food culture. Along with food spots and restaurant menus, we plan to include nearby tourist attractions such as temples, waterfalls, viewpoints, heritage places, and popular hangout locations.
+Users will be able to explore a location and see what to visit and where to eat in one place. For tourists and new visitors, this will make trip planning easier by providing spot timings, best visiting hours, food recommendations, and direct Google Maps navigation.</p>
+
+    <p>TEAM MEMBERS : 
+    <div class="team">
+      <div class="member"><i class="fas fa-code"></i><h4>Sarath</h4></div>
+      <div class="member"><i class="fas fa-laptop-code"></i><h4>Hariharan</h4></div>
+      <div class="member"><i class="fas fa-lightbulb"></i><h4>Hemalatha</h4></div>
+      <div class="member"><i class="fas fa-brain"></i><h4>Kanikaa Shree</h4></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+© 2025 GalaxyDrive | Built by Students | A startup Journey <br>
+Contact: sarathdec2007@gmail.com | 9715461134 
+</footer>
+
+<script>
+
+const restaurantData = {
+  "Tatabad":[
+{
+name:"Hotel Anandhas", rating:"4.3 / 5", hours:"6:30 AM – 10:30 PM",
+special:"South Indian Full Meals",
+  address:"Tatabad Main Road, Coimbatore, Tamil Nadu 641012",
+menu:{
+Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+Lunch:[["Full Meals",120],["Variety Rice",80]],
+Dinner:[["Chapathi",45],["Uthappam",60]]
+}
+},
+{
+name:"Hotel Geetha Canteen", rating:"4.1 / 5", hours:"7:00 AM – 4:00 PM",
+address:"Near Tatabad Bus Stop Coimbatore, Tamil Nadu 641012",
+special:"Veg Meals",
+menu:{
+Breakfast:[["Idli",25],["Dosa",35]],
+Lunch:[["Veg Meals",80],["Curd Rice",50]]
+}
+},
+{
+name:"Hotel Sri Annapoorna", rating:"4.5 / 5", hours:"6:30 AM – 10:30 PM",
+special:"South Indian Full Meals",
+address:"Tatabad Main Road,coimbatore,TamilNadu 641012",
+menu:{
+Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+Lunch:[["Full Meals",120],["Sambar Rice",80]],
+Dinner:[["Chapathi",45],["Dosa",50]]
+}
+},
+{
+name:"Hotel Sri Shanmuga Vilas", rating:"3.9 / 5", hours:"7:00 AM – 10:00 PM",
+special:"South Indian Tiffin",
+address: "Tatabad Inner Road, Coimbatore, Tamil Nadu 641012",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40],["Pongal",45]],
+Lunch:[["Meals",90]],
+Dinner:[["Chapathi",40],["Parotta",15]]
+}
+},
+{
+    name:"Hotel Aryas" , rating:"4.0 / 5" , hours:"6.30 AM - 10.30 PM",
+    special:"Veg Meals",
+    address : " Tatabad Signal Road, Coimbatore, Tamil Nadu 641012",
+    menu:{
+        Breakfast:[["Idli",30],["Dosa",45],["Poori",45]],
+        Lunch:[["Vegmeals",110],["CurdRice",70]],
+        Dinner:[["Chapathi" ,45],["Uthappam" ,60]
+]
+    }
+}
+],
+
+  "Peelamedu": [
+    {
+      name: "Hotel Jump In and Out",
+      rating: "4.1 / 5",
+      hours: "11:00 AM – 11:00 PM",
+      special: "Chicken Burger & Fried Rice",
+      address:"Peelamedu Main road,Coimbatore,Tamilnadu 641004",
+      menu: {
+        Lunch: [["Chicken Fried Rice",140],["Veg Fried Rice",120]],
+        Dinner: [["Chicken Burger",150],["Chicken Noodles",160]]
+      }
+    },
+    {
+      name: "Kovai Biriyani Hotel",
+      rating: "4.0 / 5",
+      hours: "11:00 AM – 10.30 PM",
+      special: "Chicken Biriyani",
+      address : "Peelamedu Bus Stop Area,Coimbatore,Tamilnadu 641004",
+      menu: {
+        Lunch: [["Chicken Biriyani",150],["Mutton Biriyani",220]],
+        Dinner: [["parotta",15],["Chicken curry",160]]
+      }
+    },
+    {
+  name:"Hotel Sri Krishna Vilas",
+  rating:"3.8 / 5",
+  address:"Near Peelamedu Signal, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40],["Pongal",45]],
+    Lunch:[["Meals",90]],
+    Dinner:[["Chapathi",40],["Parotta",15]]
+  }
+},
+{
+  name:"Hotel Sree Annapoorna",
+  rating:"4.5 / 5",
+  address:"Avinashi Road, Peelamedu, Coimbatore, Tamil Nadu 641004",
+  hours:"6:30 AM – 10:30 PM",
+  special:"South Indian Full Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+    Lunch:[["Full Meals",120],["Variety Rice",80]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Arya Bhavan",
+  rating:"4.0 / 5",
+  address:"Peelamedu Inner Road, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 10:30 PM",
+  special:"Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Poori",45]],
+    Lunch:[["Veg Meals",110],["Curd Rice",70]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Geetha Canteen",
+  rating:"4.1 / 5",
+  address:"Near Peelamedu Bus Stop, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 4:00 PM",
+  special:"Veg Meals",
+  menu:{
+    Breakfast:[["Idli",25],["Dosa",35]],
+    Lunch:[["Veg Meals",80],["Curd Rice",50]]
+  }
+},
+{
+  name:"Hotel Junior Kuppanna",
+  rating:"4.4 / 5",
+  address:"Avinashi Road, Peelamedu, Coimbatore, Tamil Nadu 641004",
+  hours:"11:30 AM – 11:00 PM",
+  special:"Mutton Biriyani",
+  menu:{
+    Lunch:[["Chicken Biriyani",240],["Mutton Biriyani",340]],
+    Dinner:[["Parotta",20],["Pepper Chicken",260],["Chicken Chukka",240]]
+  }
+},
+{
+  name:"Hotel Sri Saravana Bhavan",
+  rating:"4.2 / 5",
+  address:"Peelamedu Main Road, Coimbatore, Tamil Nadu 641004",
+  hours:"6:30 AM – 10:30 PM",
+  special:"South Indian Full Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50],["Poori",45]],
+    Lunch:[["Full Meals",120],["Variety Rice",80]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Sri Lakshmi Mess",
+  rating:"4.3 / 5",
+  address:"Peelamedu Market Area, Coimbatore, Tamil Nadu 641004",
+  hours:"7:00 AM – 3:00 PM",
+  special:"Veg Meals",
+  menu:{
+    Lunch:[["Veg Meals",80],["Sambar Rice",70]]
+  }
+},
+{
+  name:"Hotel Anandas",
+  rating:"4.3 / 5",
+  address:"Peelamedu Signal Area, Coimbatore, Tamil Nadu 641004",
+  hours:"6:30 AM – 10:30 PM",
+  special:"South Indian Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50]],
+    Lunch:[["Full Meals",120],["Variety Rice",80]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+}
+
+  ],
+
+  "Singanallur":[
+{
+name:"Hotel Kandha", rating:"3.8 / 5", hours:"10:00 AM – 11:00 PM",
+special:"Chicken Biriyani",
+address : "No 434 & 435, Trichy Road, Agraharam, Singanallur, Coimbatore, Tamil Nadu 641005 ",
+menu:{
+Breakfast:[["Idli",35],["Dosa",45],["Pongal",50]],
+Lunch:[["Chicken Biriyani",160],["Veg Meals",90]],
+Dinner:[["Parotta",18],["Chicken 65",130]]
+}
+},
+{
+name:"Hotel Arya Bhavan", rating:"4.0 / 5", hours:"6:30 AM – 10:00 PM",
+special:"Mini Tiffin",
+address : "Trichy Road, Singanallur, Coimbatore, Tamil Nadu 641005",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40],["Pongal",45]],
+Lunch:[["Veg Meals",90],["Curd Rice",60]],
+Dinner:[["Chapathi",40],["Parotta",15]]
+}
+},
+{
+  name:"Hotel Geetha Canteen",
+  rating:"4.3 / 5",
+  address:"Geetha Canteen, Singanallur, Coimbatore, Tamil Nadu 641005",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin & Filter Coffee",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40],["Vada",30]],
+    Lunch:[["Veg Meals",80],["Curd Rice",60]],
+    Dinner:[["Chapathi",40],["Parotta",15]]
+  }
+},
+{
+  name:"Hotel Junior Kuppanna",
+  rating:"4.4 / 5",
+  address:"Trichy Road, Singanallur, Coimbatore, Tamil Nadu 641005",
+  hours:"11:00 AM – 10:30 PM",
+  special:"Mutton Biriyani",
+  menu:{
+    Lunch:[["Chicken Biriyani",190],["Mutton Biriyani",240]],
+    Dinner:[["Parotta",20],["Chicken Curry",150]]
+  }
+},
+{
+  name:"Hotel Sri Shanmuga Vilas",
+  rating:"3.9 / 5",
+  address:"Singanallur Main Road, Coimbatore, Tamil Nadu 641005",
+  hours:"7:00 AM – 9:30 PM",
+  special:"Ghee Roast Dosa",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",50]],
+    Lunch:[["Veg Meals",90],["Tomato Rice",70]],
+    Dinner:[["Parotta",15],["Chapathi",40]]
+  }
+},
+{
+  name:"Hotel Sri Lakshmi Mess",
+  rating:"3.7 / 5",
+  address:"Singanallur Inner Street, Coimbatore, Tamil Nadu 641005",
+  hours:"7:30 AM – 3:30 PM",
+  special:"Plain Veg Meals",
+  menu:{
+    Breakfast:[["Idli",25],["Dosa",35]],
+    Lunch:[["Veg Meals",75],["Curd Rice",45]]
+  }
+},
+{
+  name:"Hotel Anandas",
+  rating:"4.5 / 5",
+  address:"Trichy Road, Singanallur, Coimbatore, Tamil Nadu 641005",
+  hours:"6:30 AM – 10:30 PM",
+  special:"Masala Dosa",
+  menu:{
+    Breakfast:[["Idli",30],["Masala Dosa",65]],
+    Lunch:[["Veg Meals",120],["Variety Rice",85]],
+    Dinner:[["Chapathi",45],["Uthappam",60]]
+  }
+},
+{
+  name:"Hotel Velmurugan Mess",
+  rating:"3.8 / 5",
+  address:"Singanallur Inner Road, Coimbatore, Tamil Nadu 641005",
+  hours:"8:00 AM – 4:00 PM",
+  special:"Country Veg Meals",
+  menu:{
+    Breakfast:[["Idli",25],["Dosa",35]],
+    Lunch:[["Veg Meals",80],["Rasam Rice",60]]
+  }
+}
+
+],
+"Kovaipudur & Nearby":[
+{
+name:"Hotel Annapoorna Mess", rating:"3.9 / 5", hours:"7:00 AM – 3:00 PM",
+special:"Veg Meals",
+address : " V-Block, Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40]],
+Lunch:[["Veg Meals",80],["Curd Rice",60]]
+}
+},
+{
+name:"Hotel Sri Lakshmi Mess", rating:"3.9 / 5", hours:"7:00 AM – 3:00 PM",
+special:"Country Style Veg Meals",
+address : "V-Block, Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042 ",
+menu:{
+Breakfast:[["Idli",30],["Dosa",40]],
+Lunch:[["Veg Meals",85],["Rasam Rice",60]]
+}
+},
+{
+  name:"Hotel Aaryas",
+  rating:"3.7 / 5",
+  address:"Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45],["Pongal",50]],
+    Lunch:[["Veg Meals",95],["Chapathi",45]],
+    Dinner:[["Parotta",18],["Fried Rice",100]]
+  }
+},
+{
+  name:"Hotel Sri Krishna Vilas",
+  rating:"4.0 / 5",
+  address:"Near Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"Ghee Roast Dosa",
+  menu:{
+    Breakfast:[["Idli",35],["Ghee Roast",70]],
+    Lunch:[["Veg Meals",100],["Tomato Rice",75]],
+    Dinner:[["Chapathi",45],["Parotta",18]]
+  }
+},
+{
+  name:"Hotel Raja Mess",
+  rating:"4.3 / 5",
+  address:"Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 3:30 PM",
+  special:"Home-style Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",90],["Curd Rice",60]]
+  }
+},
+{
+  name:"Hotel Ganapathy Vilas",
+  rating:"3.8 / 5",
+  address:"Kovaipudur Main Rd, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"Vegetarian Tiffin Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",45]],
+    Lunch:[["Veg Meals",90],["Sambar Rice",70]],
+    Dinner:[["Parotta",18],["Chapathi",40]]
+  }
+},
+{
+  name:"Hotel Sree Velmurugan",
+  rating:"3.9 / 5",
+  address:"Kovaipudur Inner Road, Kovaipudur, Coimbatore, Tamil Nadu 641042",
+  hours:"7:00 AM – 10:00 PM",
+  special:"South Indian Tiffin",
+  menu:{
+    Breakfast:[["Idli",30],["Pongal",45]],
+    Lunch:[["Veg Meals",95],["Tomato Rice",70]],
+    Dinner:[["Chapathi",40],["Parotta",15]]
+  }
+},
+{
+  name:"Hotel Kongu Mess",
+  rating:"3.6 / 5",
+  address:"Opp KVB Bank, Chinniyampalayam, Coimbatore, Tamil Nadu 641048",
+  hours:"7:00 AM – 11:00 PM",
+  special:"Kongu Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",90],["Curd Rice",60]],
+    Dinner:[["Parotta",18],["Chapathi",40]]
+  }
+},
+{
+  name:"Hotel Sri Murugan Mess",
+  rating:"4.7 / 5",
+  address:"Ramaswamy Nagar Rd, Perur Chettipalayam, Coimbatore, Tamil Nadu 641010",
+  hours:"7:00 AM – 3:00 PM",
+  special:"Traditional Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",85],["Rasam Rice",60]]
+  }
+},
+{
+  name:"Hotel Udhayam Mess",
+  rating:"4.0 / 5",
+  address:"Opposite Petrol Bunk, Kamarajar Rd, Coimbatore, Tamil Nadu 641015",
+  hours:"7:00 AM – 10:00 PM",
+  special:"Mixed Veg Meals",
+  menu:{
+    Breakfast:[["Idli",30],["Dosa",40]],
+    Lunch:[["Veg Meals",90],["Tomato Rice",70]],
+    Dinner:[["Parotta",18],["Chapathi",40]]
+  }
+}
+
+],
+"Race cource":[
+
+
+
+
+{
+  name: "Heavenly Knights",
+  rating: "4.7 / 5",
+  hours: "12:00 AM – 05:45 AM | 06:00 PM – 12:00 AM",
+  special: "Late Night Biryani & Chinese",
+  address: "2B/1, Thomas Park, Race Course, Coimbatore",
+  phone: "+91 99432 99000",
+  menu: {
+    Dinner: [
+      ["Veg Soup", 130],
+      ["Non-Veg Soup", 140],
+      ["Veg & Non-Veg Starters", "180 – 220"],
+      ["Fried Rice Varieties", "160 – 210"],
+      ["Noodles Varieties", "170 – 220"],
+      ["Plain Biryani", 150],
+      ["Egg Biryani", 170],
+      ["Chicken Biryani", 200],
+      ["Veg & Non-Veg Gravies", "160 – 200"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Chill Pannu Mappi",
+  rating: "4.5 / 5",
+  hours: "05:00 PM – 10:00 PM",
+  special: "Snacks & Fast Food",
+  address: "Reheja Apartments, near Smart Bazaar, Race Course, Coimbatore - 641018",
+  phone: "+91 70946 35328",
+  menu: {
+    Dinner: [
+      ["French Fries", "50 – 80"],
+      ["Nuggets", "50 – 70"],
+      ["Burgers", "50 – 110"],
+      ["Hot Dogs", "50 – 90"],
+      ["Crispy Fried Chicken", "60 – 90"],
+      ["Momos", "80 – 100"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Welcome Cafe Kovai",
+  rating: "Not Listed",
+  hours: "07:00 AM – 11:00 PM",
+  special: "South Indian & Snacks",
+  address: "TS No: 1266/14, Ward A (1), W Club Road, Race Course, Coimbatore - 641018",
+  phone: "0422 222 6555",
+  menu: {
+   Breakfast: ["South Indian Tiffin – Available"],
+    Lunch: ["Meals & Snacks – Available"],
+    Dinner: ["Tiffin & Fast Food – Available"]
+  }
+},
+
+
+{
+  name: "Grand Café",
+  rating: "4.4 / 5",
+  hours: "11:15 AM – 03:15 PM",
+  special: "Premium Multicuisine Dining",
+  address: "No. 52, Near Commissioner Office, State Bank Street, Race Course, Coimbatore - 641018",
+  phone: "+91 79471 08291",
+  menu: {
+    Lunch: [
+      ["Special Meals", 200],
+      ["Paruppu Vadai", 15],
+      ["Sambar / Rasam", 35],
+      ["Poriyal / Kootu", 40],
+      ["Appalam", 10]
+    ],
+    Dinner: [
+      ["Chilli Chicken Dry", 120],
+      ["Chicken Manchurian", 140],
+      ["Paneer Butter Masala", 100],
+      ["Butter Chicken", 140],
+      ["Chicken Fried Rice", 120],
+      ["Wheat Parotta", 20],
+      ["Mushroom Kothu Parotta", 70]
+    ]
+  }
+},
+
+
+
+{
+  name: "Valarmathi Mess",
+  rating: "4.3 / 5",
+  hours: "Lunch: 12:00 PM – 04:00 PM | Dinner: 07:00 PM – 10:30 PM",
+  special: "Non-Veg Starters & Biryani",
+  address: "CSI Compound, 207/A, Race Course, Coimbatore - 641018",
+  phone: "0422 427 1190",
+  menu: {
+    Lunch: [
+      ["Chicken Biryani", 220],
+      ["Mutton Biryani", 270],
+      ["Egg Biryani", 190],
+      ["Plain Biryani", 170]
+    ],
+    Dinner: [
+      ["Mutton Starters", "35 – 290"],
+      ["Chicken Starters", "195 – 210"],
+      ["Omelette", 20]
+    ]
+  }
+},
+
+
+
+{
+  name: "Ranjith Canteen",
+  rating: "4.3 / 5",
+  hours: "07:00 AM – 10:00 PM",
+  special: "Dosa & Budget Meals",
+  address: "Gopalapuram, Race Course, Coimbatore - 641018",
+  phone: "+91 84899 64747",
+  menu: {
+    Breakfast: [
+      ["Roast Dosa", 90],
+      ["Ghee Podi Roast", 120],
+      ["Kal Dosai", 65]
+    ],
+    Lunch: [
+      ["Veg Biryani", 60]
+    ],
+    Dinner: [
+      ["Parotta with Kurma", "Available"],
+      ["Egg Kothu Parotta", "Available"],
+      ["Veechu Parotta", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Geetha Cafe",
+  rating: "4.2 / 5",
+  hours: "08:00 AM – 10:30 PM",
+  special: "Veg Meals & Snacks",
+  address: "7/52, Geetha Hall Road, Near Railway Station, Race Course, Coimbatore - 641018",
+  phone: "044 2815 0083",
+  menu: {
+    Breakfast: [
+      ["Idly", 30],
+      ["Masala Roast Dosa", "73 – 78"],
+      ["Sevai (Plain / Lemon)", 74],
+      ["Kichadi", 74]
+    ],
+    Lunch: [
+      ["Veg Biryani Meal", 147],
+      ["Special Kolambu Meal", 132]
+    ],
+    Dinner: [
+      ["Gobi 65", 76],
+      ["Chilli Paneer", 91],
+      ["Mushroom 65", 93]
+    ]
+  }
+},
+
+
+
+{
+  name: "Boche Food Express",
+  rating: "4.2 / 5",
+  hours: "Open 24 Hours (Multiple Slots)",
+  special: "Biryani, Rice & Noodles",
+  address: "Near Central Railway Station, SBI Road, Race Course, Coimbatore - 641018",
+  phone: "+91 81100 07426",
+  menu: {
+    Breakfast: [],
+    Lunch: [
+      ["Veg Fried Rice", 144],
+      ["Egg Fried Rice", 168],
+      ["Chicken Noodles", 192]
+    ],
+    Dinner: [
+      ["Plain Biryani (Rice Only)", 192],
+      ["Schezwan Veg Fried Rice", "Varies"]
+    ]
+  }
+},
+
+
+
+{
+  name: "RHR",
+  rating: "4.1 / 5",
+  hours: "05:15 AM – 11:00 PM",
+  special: "South Indian Breakfast & Meals",
+  address: "27, State Bank Road, Race Course, Coimbatore - 641018",
+  phone: ["+91 94432 14000", "+91 94883 14000", "+91 94426 30272"],
+  menu: {
+    Breakfast: [
+      ["Kesari", 55],
+      ["Idly (2 pcs)", 40],
+      ["Sambar Idly", 50],
+      ["Vadai", 26],
+      ["Sambar Vadai", 34],
+      ["Pongal", 67],
+      ["Poori Masala", 80],
+      ["Rava Kitchadi", 65],
+      ["Wheat Uppuma with Curd", 75],
+      ["Roast / Uthappam", "90 – 125"]
+    ],
+    Lunch: ["Soups & Starters – Available"],
+    Dinner: ["North Indian & Chinese – Available"]
+  }
+},
+
+
+
+{
+  name: "Sri Sai Cafe",
+  rating: "4.1 / 5",
+  hours: "07:00 AM – 09:00 PM",
+  special: "Pure Veg Meals & Tiffin",
+  address: "64A, North Huzur Road, Race Course, Coimbatore",
+  phone: "+91 70944 50805",
+  menu: {
+    Breakfast: [
+      ["Uthappam Varieties", "33 – 55"],
+      ["Sevai Varieties", "33 – 44"]
+    ],
+    Lunch: [
+      ["Full Meals", 88],
+      ["Banana Leaf Full Meal", 100],
+      ["Variety Rice", 28],
+      ["Mushroom Biryani", 65]
+    ],
+    Dinner: [
+      ["Veg Fried Rice / Noodles", 80],
+      ["Paneer / Mushroom Fried Rice & Noodles", 90],
+      ["Sevai (Special)", "50 – 70"]
+    ]
+  }
+},
+],
+"GandhiPuram":[
+{
+  name: "Aasif & Brothers Biriyani",
+  rating: "4.4 / 5",
+  hours: "07:00 AM - 04:00 PM",
+  special: "Bucket Biriyani & Starters",
+  address: "Ashish Plaza, 240, 9th Street, Gandhipuram, Coimbatore",
+  phone: "+91 93637 13733",
+  menu: {
+    Breakfast : [
+      ["Chicken Biriyani", 230],
+      ["Mutton Biriyani", 300],
+      ["Bucket Chicken Biriyani (Medium)", 1100],
+      ["Bucket Chicken Biriyani (Large)", 1900],
+      ["Bucket Mutton Biriyani (Medium)", 1500],
+      ["Bucket Mutton Biriyani (Large)", 2900],
+  ["Chicken Starters", 120 -220],
+  ["Mutton Starters", 180 - 320],
+  ["Veg Starters", 80 - 150],
+  ["Veg Fried Rice", 90 - 140],
+  ["Egg Fried Rice", 10 - 160]],
+  Lunch :[
+  ["Chicken Fried Rice", 140 - 200],
+  ["Veg Noodles", 90 - 140],
+  ["Egg Noodles", 110 - 160],
+  ["Chicken Noodles", 140 - 200],
+  ["Veg Gravies", 90 - 150],
+  ["Chicken Gravies", 150 - 220],
+  ["Mutton Gravies", 220 - 320],
+    ],
+  },
+
+
+},
+
+{
+  name: "Chop & Beat",
+  rating: "4.7 / 5",
+  hours: "06:00 AM - 11:30 PM",
+  special: "Breakfast, Lunch & Dinner Meals",
+  address: "No. 73, New 18th Street, Cross Cut Road, Gandhipuram, Coimbatore - 641012",
+  menu: {
+    Breakfast: [
+      ["Idly", 20],
+      ["Vadai", 20],
+      ["Pongal", 60],
+      ["Poori", 25],
+      ["Dosa", 40]
+    ],
+    Lunch: [
+      ["South Indian Meals", 150],
+      ["Veg Meals", 120],
+      ["Mushroom Biriyani", 175]
+    ],
+    Dinner: [
+      ["Chapathi", 35],
+      ["Veg Omelette", 75],
+      ["Fried Rice / Noodles", 80 - 150]
+    ]
+  }
+},
+
+
+
+{
+  name: "Velan Express Eats",
+  rating: "4.2 / 5",
+  hours: "05:00 AM - 10:30 PM",
+  special: "Tiffin, Snacks & Desserts",
+  address: "8th Cross Cut Road, Ram Nagar, Gandhipuram, Coimbatore",
+  menu: {
+    Breakfast: [
+      ["Idly", 30],
+      ["Dosa", 70 - 100],
+      ["Roast Varieties", 70 - 100]
+    ],
+    Lunch: [
+      ["Variety Rice", 50 - 65],
+      ["Veg Starters", 80 - 120],
+      ["Snacks & Chaat", 40 - 90]
+    ],
+    Dinner: [
+      ["Special Falooda", 50],
+      ["Ice Cream", 80 - 120],
+      ["Milkshakes", 80 - 120]
+    ]
+  }
+},
+
+
+
+{
+  name: "South Indian Executive Lunch Mess",
+  rating: "4.3 / 5",
+  hours: "Breakfast: 07:00 AM - 10:30 AM | Lunch: 12:00 PM - 03:00 PM",
+  special: "Executive Lunch & Variety Rice",
+  menu: {
+    Breakfast: [
+      ["Idly", 25],
+      ["Vadai", 25],
+      ["Pongal", 60],
+      ["Poori", 25],
+      ["Dosa", 40]
+    ],
+    Lunch: [
+      ["South Indian Executive Lunch", 120 - 150],
+      ["Variety Rice", "50 - 70"],
+      ["Veg / Green Peas Pulao", 80 - 110],
+      ["Veg Fried Rice", 90 - 120],
+      ["Veg Noodles", 90 - 120]
+    ],
+    Dinner: []
+  }
+},
+
+
+
+{
+  name: "Shree Annapoorna",
+  rating: "4.5 / 5",
+  hours: "Breakfast: 06:30 AM - 11:00 AM | Lunch: 12:00 PM - 03:30 PM | Dinner: 06:30 PM – 10:30 PM",
+  special: "Pure Veg South Indian Restaurant",
+  menu: {
+    Breakfast: [
+      ["Idly (2 pcs)", 40],
+      ["Vadai", 30],
+      ["Pongal", 80],
+      ["Plain Dosa", 70],
+      ["Masala Dosa", 90],
+      ["Poori Masala", 95],
+      ["Coffee", 35],
+      ["Tea", 25]
+    ],
+    Lunch: [
+      ["South Indian Full Meals", 160],
+      ["Mini Meals", 120],
+      ["Sambar Rice", 90],
+      ["Rasam Rice", 90],
+      ["Curd Rice", 80],
+      ["Variety Rice", 90 -110]
+    ],
+    Dinner: [
+      ["Plain Dosa", 70],
+      ["Masala Dosa", 90],
+      ["Onion Uttappam", 95],
+      ["Chapathi (2 pcs)", 80],
+      ["Vegetable Kurma", 90],
+      ["Coffee / Tea", 25 - 35]
+    ]
+  }
+},
+
+
+
+{
+  name: "Geetha Canteen (Pure Veg)",
+  rating: "4.3 / 5",
+  hours: "07:00 AM - 10:30 PM",
+  address: "Rangan Street, Near Shankar IAS Academy, Ram Nagar, Coimbatore - 641009",
+  phone: "0422 223 2206",
+  menu: {
+    Breakfast: [
+      ["Idly", 30],
+      ["Vadai", 20],
+      ["Pongal", 60],
+      ["Poori Masala", 60],
+      ["Chapathi (2 pcs)", 50],
+      ["Roast Varieties", 70 - 110],
+      ["Uthappam Varieties", 70 - 110]
+    ],
+    Lunch: [
+      ["Meals", 120],
+      ["Variety Rice", 50 - 70],
+      ["Veg Fried Rice", 90],
+      ["Veg Noodles", 90],
+      ["Rose Milk", 40]
+    ],
+    Dinner: [
+      ["Idly", 30],
+      ["Roast / Uthappam", 70 -110],
+      ["Parotta", 30],
+      ["Veg Fried Rice", 90],
+      ["Veg Noodles", 90]
+    ]
+  }
+},
+
+
+
+{
+  name: "Biriyani in Bucket",
+  rating: "4.7 / 5",
+  hours: "11:30 AM - 11:00 PM",
+  address: "Arab Towers, 11th Street, near Hotel Geo Grande, Tatabad, Gandhipuram, Coimbatore - 641012",
+  menu: {
+    Lunch: [
+      ["Chicken Bucket Biriyani (Serves 1)", 350],
+      ["Chicken Bucket Biriyani (Serves 2)", 620],
+      ["Chicken Bucket Biriyani (Serves 4)", 1300],
+      ["Chicken Bucket Biriyani (Serves 6)", 2300],
+      ["Mutton Bucket Biriyani (Serves 1)", 420],
+      ["Mutton Bucket Biriyani (Serves 2)", 820],
+      ["Mutton Bucket Biriyani (Serves 4)", 1600],
+      ["Mutton Bucket Biriyani (Serves 8)", 3000]
+    ],
+    Dinner: [
+      ["Exclusive Chicken Combos", 200 -350],
+      ["Exclusive Mutton Combos", 250 - 400],
+      ["Signature Starters", 180 - 300],
+      ["Rice Kheer", 90],
+      ["Elaneer Payasam", 120]
+    ]
+  }
+},
+
+
+
+{
+  name: "C2 Chicken - Mega Food Court",
+  rating: "4.8 / 5",
+  hours: {
+    Monday: "05:00 PM - 10:00 PM",
+    Tue_Fri: "02:30 PM - 10:00 PM",
+    Saturday: "02:30 PM - 10:00 PM",
+    Sunday: "02:30 PM - 12:00 AM"
+  },
+  address: "12/121, Rajaji Road, Peranaidu Layout, Ram Nagar, Gandhipuram, Coimbatore - 641009",
+  phone: "+91 99405 73244",
+  menu: {
+    Dinner: [
+      ["Chicken Popcorn / Wings / Strips / Drumstick", "39 - 139"],
+      ["Burgers", 80 - 120],
+      ["Sandwiches", 70 - 90],
+      ["Momos", 90 - 120],
+      ["Waffles", 90 - 150],
+      ["Milkshakes", 90 - 140],
+      ["Cool Beverages", 30 - 80]
+    ]
+  }
+},
+
+
+
+{
+  name: "C2 Chicken - Mega Food Court",
+  rating: "4.8 / 5",
+  hours: {
+    Monday: "05:00 PM - 10:00 PM",
+    Tue_Fri: "02:30 PM - 10:00 PM",
+    Saturday: "02:30 PM - 10:00 PM",
+    Sunday: "02:30 PM - 12:00 AM"
+  },
+  address: "12/121, Rajaji Road, Peranaidu Layout, Ram Nagar, Gandhipuram, Coimbatore - 641009",
+  phone: "+91 99405 73244",
+  menu: {
+    Dinner: [
+      ["Chicken Popcorn / Wings / Strips / Drumstick", "39 – 139"],
+      ["Burgers", 80 - 120],
+      ["Sandwiches", 70 - 90],
+      ["Momos", 90 - 120],
+      ["Waffles", 90 - 150],
+      ["Milkshakes", 90 - 140],
+      ["Cool Beverages", 30 - 80]
+    ]
+  }
+},
+
+
+
+{
+  name: "KIN FOODS",
+  rating: "4.4 / 5",
+  hours: "Morning till 11:00 AM | Evening 07:00 PM – 11:00 PM",
+  address: "112, Nehru Street, Peranaidu Layout, Ram Nagar, Gandhipuram, Coimbatore - 641009",
+  phone: "+91 83000 30554",
+  menu: {
+    Breakfast: [
+      ["Idly", 20],
+      ["Dosa", 40],
+      ["Podi Dosa", 50],
+      ["Special Dosa", 70],
+      ["Sevai", 40]
+    ],
+    Lunch: [
+      ["Chapathi", 30],
+      ["Parotta", 25]
+    ],
+    Dinner: [
+      ["Omelette", 30],
+      ["Kalaki", 25],
+      ["Half Boil", 20],
+      ["Valazhai Elai Meals", 120]
+    ]
+  }
+},
+
+
+
+{
+  name: "Madras Kappi & Eats",
+  rating: "3.9 / 5",
+  hours: "06:00 AM – 10:00 PM",
+  address: "1095, Signal Light Corner, Cross Cut Road, Gandhipuram, Coimbatore - 641012",
+  phone: "+91 80986 88688",
+  menu: {
+    Breakfast: [
+      ["Dosa Varieties", 59],
+      ["Idly / Mini Idly", 30],
+      ["Chola Poori", 60],
+      ["Parotta / Chapathi", 40]
+    ],
+    Lunch: [
+      ["Variety Rice", 50 -70]
+    ],
+    Dinner: [
+      ["Chilli Paneer / Gobi / Mushroom", 90],
+      ["French Fries", 70],
+      ["Brownie Sizzler", 120],
+      ["Brownie with Ice Cream", 100],
+      ["Sandwich Varieties", 80],
+      ["Sweet Corn", 40],
+      ["Norukkal Varieties", 40 - 50],
+      ["Settu Varieties", 40 - 70],
+      ["Tawa Butter Bun", 40 -70],
+      ["Fresh Juice", 50 - 90],
+      ["Milkshakes", 80 - 120]
+    ]
+  }
+},
+
+],
+"SaiBaba Colony":[
+{
+name:"Ramesh mess", rating:"4.4 / 5", hours:"07:30 AM – 10:30 PM",
+special:"",
+address:"126, Alagesan Road, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+phone:"0422 244 1533",
+menu:{
+Breakfast:[["Idli (1 Set)",15],["Urad Dal Vada",10],["Poori (1 Set)",25],["Chapati (1 Set)",30],["Parotta (1 Set)",40],["Wheat Parotta (1 Set)",30],["Pongal",25],["Rava Kichadi",25],["Aval Kichadi (Poha)",25],["Sama Pongal",25],["Thinai Pongal",25],["Varagu Pongal",25],["Kambu Dosa",25],["Ragi Dosa",25],["Cholam Dosa",25],["Wheat Dosa",25],["Navadhaniyam Dosa (Nine Grains)",25],["Kuthiraivali Dosa",25],["Podi Dosa",20],["Onion Roast",30]],
+Lunch:[["Variety Rice",100]],
+Dinner:[["Chapathi",45],["Dosa",50],["Parotta",15]]
+}
+},
+
+
+{
+name:"Deepan kadai ", rating:"4.4 / 5", hours:"11:00 AM – 02:00 AM",
+special:"",
+address:"70/76, Raja Annamalai Rd, Loom World, New Nesavu Colony, Nesavaalar Colony, Coimbatore, Tamil Nadu 641011",
+phone:"+91 73958 27233",
+menu:{
+Lunch:[["Mutton Biriyani",250],["chicken Biriyani",200],["Gilma Biriyani",220],["egg Biriyani",150],["Kudal Curry",195],["Mutton Chukka",195],["Chicken Chukka",150],["Chicken manjurian",150]],
+Dinner:[["Veg Kothu Paratha",75],["Egg Lappa",75],["Chilli Paratha",120],["Egg Veechu Paratha",60],["Chicken Fried Rice",150],["Chicken Noodles",150],["Egg Noodles",120],["Egg Fried Rice",120],["Veg Fried Rice",90],["Veg Noodles",90],["Dosa",35],["Chicken Dosa",125],["Plain Chapati",35],["Idli",20],["Podi Idli",45]],
+}
+},
+
+
+{
+  name: "Paarvai's Hub",
+  rating: "4.7 / 5",
+  hours: "02:00 PM – 10:00 PM",
+  special: "Variety Sets, Norukkalz, Sandwiches",
+  address: "39-9, Raja Annamalai Rd, Alagesan Rd Junction, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 72007 37624",
+  menu: {
+    Dinner: [
+      ["Onion Set", 30],
+      ["Tomato Set", 30],
+      ["Cucumber Set", 30],
+      ["Garlic Set", 40],
+      ["Mango Set", 40],
+      ["Curd Set", 40],
+      ["Groundnut Set", 40],
+      ["Cheese Set", 50],
+      ["Combo Set", 50],
+      ["Plain Norukkal", 40],
+      ["Mango Norukkal", 50],
+      ["Garlic Norukkal", 50],
+      ["Curd Norukkal", 50],
+      ["Cheese Norukkal", 50],
+      ["Plain Sandwich", 45],
+      ["Garlic Sandwich", 55],
+      ["Mango Sandwich", 55],
+      ["Chocolate Sandwich", 60],
+      ["Choco Banana Sandwich", 60]
+    ]
+  }
+},
+
+
+{
+  name: "The High Joint",
+  rating: "4.4 / 5",
+  hours: "12:30 PM – 10:00 PM (sometimes till 11:15 PM)",
+  special: "Burgers, Tacos, Burritos, Bubble Tea",
+  address: "4B, VKK Menon Street, Janaki Nagar, Kuppakonam Pudur, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 90870 31787",
+  menu: {
+    Lunch: [
+      ["Chicken Burger (Varieties)", 260 - 425],
+      ["Beef Burger (Varieties)", 285 - 360],
+      ["Tacos", 270 - 310],
+      ["Burritos", 270 -310]
+    ],
+    Dinner: [
+      ["Chicken Burger (Varieties)", 260 - 425],
+      ["Beef Burger (Varieties)", 285 - 360],
+      ["Chicken Wings", 255 - 295],
+      ["Tacos", 270 - 310],
+      ["Burritos", 270 - 310],
+      ["Mojitos (Varieties)", 99 - 120],
+      ["Thai Milk Bubble Tea", 180],
+      ["Milo Lava Bubble Tea", 200]
+    ]
+  }
+},
+
+
+{
+  name: "Manna Mess",
+  rating: "4.3 / 5",
+  hours: "11:00 AM – 11:00 PM",
+  special: "Authentic Non-Veg Meals & Biryanis",
+  address: "554, NSR Road, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 93454 10068",
+  menu: {
+    Lunch: [
+   
+      ["Chicken Biryani", 310],
+      ["Mutton Biryani", 400],
+      ["Egg Biryani", 260],
+
+ 
+      ["Non-Veg Meals", 250],
+
+
+      ["Chicken Curry Dosa", 290],
+      ["Mutton Curry Dosa", 320]
+    ],
+    Dinner: [
+      
+      ["Chicken Biryani", 310],
+      ["Mutton Biryani", 400],
+      ["Egg Biryani", 260],
+
+  
+      ["Prawn Thokku", 370],
+      ["Vanjiram Fry", 390],
+      ["Crab Fry", 360],
+      ["Mutton Sukka", 390],
+      ["Nattu Kozhi Varuval", 300],
+
+  
+      ["Chicken Curry Dosa", 290],
+      ["Mutton Curry Dosa", 320],
+
+ 
+      ["Non-Veg Meals", 250],
+
+   
+      ["Ilaneer Payasam", 100]
+    ]
+  }
+},
+
+
+{
+  name: "Nallaae Mess",
+  rating: "4.2 / 5",
+  hours: "Lunch: 12:00 PM – 4:00 PM | Dinner: 6:30 PM – 10:30 PM",
+  special: "Non-Veg Meals, Biryanis & Chinese Starters",
+  address: "No. 3, SRP Nagar, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: ["+91 86828 22525", "+91 94434 33787"],
+  menu: {
+    Lunch: [
+      ["Schezwan Veg Noodles", 200],
+      ["Egg Noodles", 220],
+      ["Chicken Noodles", 230],
+      ["Chicken Biryani", "Varies"],
+      ["Mutton Biryani", "Varies"],
+      ["Egg Biryani", "Varies"],
+      ["Spicy Chicken Gravy", "Varies"],
+      ["Chicken Manchurian Gravy", "Varies"]
+    ],
+    Dinner: [
+      ["Schezwan Veg Noodles", 200],
+      ["Egg Noodles", 220],
+      ["Chicken Noodles", 230],
+      ["Chicken 65", "Varies"],
+      ["Chilly Chicken", "Varies"],
+      ["Gobi 65", "Varies"],
+      ["Paneer 65", "Varies"],
+      ["Mutton Chukka", "Varies"],
+      ["Kudal Fry", "Varies"],
+      ["Chicken Biryani", "Varies"],
+      ["Mutton Biryani", "Varies"],
+      ["Egg Biryani", "Varies"],
+      ["Spicy Chicken Gravy", "Varies"],
+      ["Chicken Manchurian Gravy", "Varies"]
+    ]
+  }
+},
+
+
+{
+  name: "Sri Venkateshwara Bhavan",
+  rating: "4.1 / 5",
+  hours: "07:00 AM – 10:00 PM (sometimes till 10:30 PM)",
+  special: "Pure Veg South Indian Meals & Tiffin",
+  address: "Door No. 5, Bharathi Park, 5th Cross Road, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 42224 04545",
+  menu: {
+    Breakfast: [
+      ["Idly (2 pcs)", 30],
+      ["Vadai", 15],
+      ["Pongal", 60],
+      ["Roast / Dosa", 60 -90],
+      ["Uthappam", 60 -90],
+      ["Sevai (Varieties)", 70 -100],
+      ["Mini Tiffin", 120],
+      ["Milk", 20],
+      ["Tea", 25],
+      ["Coffee", 30],
+      ["Fresh Juices", 30 - 120]
+    ],
+    Lunch: [
+      ["Meals", 130],
+      ["Veg Biryani", 80],
+      ["Mushroom Biryani", 100],
+      ["Paneer Biryani", 120],
+      ["Variety Rice", "Available"],
+      ["Pulao", "Available"],
+      ["Veg Gravies", "-"],
+      ["Starters", "-"]
+    ],
+    Dinner: [
+      ["Idly (2 pcs)", 30],
+      ["Vadai", 15],
+      ["Pongal", 60],
+      ["Roast / Dosa", 60 - 90],
+      ["Uthappam", 60 - 90],
+      ["Sevai (Varieties)", 70 - 100],
+      ["Mini Tiffin", 120],
+      ["Veg Biryani", 80],
+      ["Mushroom Biryani", 100],
+      ["Paneer Biryani", 120],
+      ["Pulao", "Available"],
+      ["Veg Gravies", "Available"],
+      ["Starters", "Available"],
+      ["Milk", 20],
+      ["Tea", 25],
+      ["Coffee", 30],
+      ["Fresh Juices", 30 - 120]
+    ]
+  }
+},
+
+
+{
+  name: "Lovely Mushroom Stall",
+  rating: "4.1 / 5",
+  hours: "04:30 PM – 10:00 PM",
+  special: "Mushroom Mix Snacks, Noodles & Fried Rice",
+  address: "4/2, Raja Annamalai Rd, Nesavaalar Colony, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 79471 47074",
+  menu: {
+    Breakfast: [],
+    Lunch: [],
+    Dinner: [
+      ["Bhel Poori",45],
+      ["Pani Poori",45],
+      ["Masal Poori",45],
+      ["Egg Bhel Poori",55],
+      ["Bhel Mushroom Mix",60],
+      ["Egg Bhel Mushroom Mix",70],
+      ["Mushroom",45],
+      ["Egg Mushroom",55],
+      ["Veg Noodles",55],
+      ["Egg Noodles",65],
+      ["Noodles Mushroom Mix",65],
+      ["Egg Noodles Mushroom Mix",75],
+      ["Veg Fried Rice",55],
+      ["Egg Fried Rice",65],
+      ["Veg Rice Mushroom Mix",65],
+      ["Egg Rice Mushroom Mix",75]
+    ]
+  }
+},
+
+
+{
+  name: "Mani Mess",
+  rating: "3.8 / 5",
+  hours: "07:00 AM – 10:00 PM",
+  special: "Budget Tiffin, Biriyani & Chinese",
+  address: "4, Chinna Subbanna Layout, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 97517 11555",
+  menu: {
+    Breakfast: [
+      ["Idly (2 pcs)", 20],
+      ["Vadai", 10],
+      ["Dosai", 20],
+      ["Uthappam", 40],
+      ["Kichadi", 20],
+      ["Chappathi", 20]
+    ],
+    Lunch: [
+      ["Plain Biriyani", 70],
+      ["Chicken Biriyani", 120],
+      ["65 Biriyani", 130],
+      ["Fried Rice", 70 - 100],
+      ["Noodles", 70 - 100],
+      ["Egg Varieties", "-"],
+      ["Parotta Varieties", "-"]
+    ],
+    Dinner: [
+      ["Kothu Chappathi", 80],
+      ["Plain Biriyani", 70],
+      ["Chicken Biriyani", 120],
+      ["65 Biriyani", 130],
+      ["Fried Rice", 70 - 100],
+      ["Noodles", 70 - 100],
+      ["Egg Varieties", "-"],
+      ["Chappathi & Parotta Varieties", "-"]
+    ]
+  }
+},
+
+
+{
+  name: "Azhagar Mess",
+  rating: "3.6 / 5",
+  hours: "Morning: 07:00 AM – 03:00 PM | Evening: 06:00 PM – 10:30 PM",
+  special: "Veg Meals, Rice Varieties & Tiffin",
+  address: "76 E-1, NSR Road, Saibaba Colony, Coimbatore - 641011, Tamil Nadu",
+  phone: "+91 42224 31232",
+  menu: {
+    Breakfast: [
+      ["Vadai", 20],
+      ["Sambar Vadai", 35],
+      ["Uttapam", 55],
+      ["Tomato Uttapam", 70],
+      ["Roast", 50]
+    ],
+    Lunch: [
+      ["Veg Meal (Regular / Special)", 120 - 145],
+      ["Veg Biryani", 70 - 120],
+      ["Tomato Rice", 50 - 75],
+      ["Puli Sadham / Pudina Rice", 50],
+      ["Mushroom Biryani", 137],
+      ["Chilly Soya Biriyani", 137],
+      ["Parotta", 30],
+      ["Appalam (1 pc)", 8],
+      ["Podi & Ghee", "Extra charges"]
+    ],
+    Dinner: [
+      ["Veg Meal (Regular / Special)", 120 - 145],
+      ["Veg Biryani", 70 -120],
+      ["Tomato Rice", 50 - 75],
+      ["Puli Sadham / Pudina Rice", 50],
+      ["Mushroom Biryani", 137],
+      ["Chilly Soya Biriyani", 137],
+      ["Parotta", 30],
+      ["Appalam (1 pc)", 8],
+      ["Podi & Ghee", "Extra charges"]
+    ]
+  }
+},
+
+],
+"R.S.Puram":[
+
+
+
+{
+  name: "CHICKBURG",
+  rating: "5.0 / 5",
+  hours: "Mon: 10:30 AM – 11:30 PM | Tue–Sun: 10:30 AM – 12:00 AM",
+  special: "Fried Chicken, Wraps & Buckets",
+  address: "1321, Thadagam Main Rd, R.S. Puram, Coimbatore - 641002, Tamil Nadu",
+  phone: "+91 99444 42411",
+  menu: {
+    Lunch: [
+      ["Sandwiches", "99 – 222"],
+      ["Wraps", "99 – 179"],
+      ["Veg Starters", "39 – 200"]
+    ],
+    Dinner: [
+      ["Fried Chicken (Popcorn / Fries / Strips / Wings)", "79 – 260"],
+      ["Bucket Chicken", "280 – 899"],
+      ["Milkshakes", "99 – 180"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Madurai Miras",
+  rating: "4.9 / 5",
+  hours: "10:30 AM – 10:30 PM",
+  special: "Snacks, Ice Creams & Soups",
+  address: "249, Diwan Bahadur Road, R.S. Puram, Coimbatore - 641001",
+  phone: ["88387 06233", "84380 03395"],
+  menu: {
+    Breakfast: [
+      ["Tea", 15],
+      ["Coffee", 25],
+      ["Lemon Tea", 15]
+    ],
+    Lunch: [
+      ["Soups (Valathandu / Vegetable)", 30],
+      ["Veg Snacks & Fries", 99],
+      ["Veg & Chicken Burgers", 99]
+    ],
+    Dinner: [
+      ["Ice Creams & Softy Cones", 80],
+      ["Chicken Snacks (Popcorn / Nuggets / Momos)", 99],
+      ["Puffs & Pastries", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Chennai’s Empire Biriyani",
+  rating: "4.7 / 5",
+  hours: "11:00 AM – 11:00 PM",
+  special: "Biryani Combos & Starters",
+  address: "1318, Thadagam Road, R.S. Puram, Coimbatore - 641108",
+  phone: "+91 93426 71991",
+  menu: {
+    Lunch: [
+      ["Chicken Biryani Combo", 229],
+      ["Mutton Biryani Combo", 249],
+      ["Egg Biryani", 252]
+    ],
+    Dinner: [
+      ["Chicken / Mutton Biryani with Gravy", "199 – 289"],
+      ["Prawn Thokku Biryani", 365],
+      ["Starters (Chicken 65 / Chukka / Gobi)", "80 – 219"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Chaat Singh",
+  rating: "4.5 / 5",
+  hours: "01:00 PM – 10:00 PM",
+  special: "Chats & Fast Food",
+  address: "56/60, Robertson Road, R.S. Puram, Coimbatore - 641002",
+  phone: "063826 36809",
+  menu: {
+    Lunch: [
+      ["Chat Items", 15 - 80],
+      ["Sandwiches", 50 - 150],
+      ["Burgers", 50 - 80]
+    ],
+    Dinner: [
+      ["Chowmein", 60],
+      ["Fried Rice & Noodles", "70 - 110"],
+      ["Milkshakes", "30 - 100"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Palm Cafe & Restaurant",
+  rating: "4.4 / 5",
+  hours: "09:00 AM – 11:30 PM",
+  special: "Paneer Dishes & Fried Rice",
+  address: "512, Shameems Tower, Thadagam Main Road, R.S. Puram, Coimbatore",
+  phone: "+91 94868 78699",
+  menu: {
+    Lunch: [
+      ["Paneer / Mushroom / Veg Gravies", "110 – 240"],
+      ["Veg Fried Rice",120]
+    ],
+    Dinner: [
+      ["Egg / Chicken / Non-Veg Fried Rice","150 – 260"],
+      ["Pasta & Rolls", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Social Kitchen",
+  rating: "4.3 / 5",
+  hours: "07:30 AM – 10:30 PM",
+  special: "Healthy Dosa Varieties",
+  address: "149, W Sambandam Rd, R.S. Puram, Coimbatore - 641002",
+  phone: "+91 77367 72555",
+  menu: {
+    Breakfast: [
+      ["Idly", 10],
+      ["Vadai", 10],
+      ["Udupi Dosa Varieties", 40],
+      ["Ragi / Methi Dosa", 77],
+      ["Poori Aloo Bhaji", 77]
+    ],
+    Lunch: [],
+    Dinner: [
+      ["Butter Dosa", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Meenatchi Tiffen Center",
+  rating: "4.3 / 5",
+  hours: "12:00 PM – 11:00 PM",
+  special: "Variety Rice & Tiffin",
+  address: "1, VCV Layout, Lingappa Road, R.S. Puram, Coimbatore - 641001",
+  phone: "+91 78269 00858",
+  menu: {
+    Lunch: [
+      ["Variety Rice", "Available"],
+      ["Sevai Varieties", "Available"],
+      ["Mushroom Biryani", "Available"]
+    ],
+    Dinner: [
+      ["Parotta", "Available"],
+      ["Kothu Parotta", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Sharief Bhai Biriyani",
+  rating: "4.3 / 5",
+  hours: "11:00 AM – 11:00 PM",
+  special: "Premium Biriyani & Kebabs",
+  address: "Site No 212, E TV Samy Road, R.S. Puram, Coimbatore - 641002",
+  menu: {
+    Lunch: [
+      ["Chicken Haleem", 169],
+      ["Biriyani Varieties", "From 319"],
+      ["Chicken Soup", 109]
+    ],
+    Dinner: [
+      ["Kebabs (Chicken & Mutton)", "199 – 449"],
+      ["Main Course Chicken", "199 – 359"],
+      ["Signature Pattar Ghost Mutton", 249]
+    ]
+  }
+},
+
+
+
+{
+  name: "Anu Mess",
+  rating: "4.1 / 5",
+  hours: "11:00 AM – 03:30 PM",
+  special: "Budget Meals & Non-Veg",
+  address: "87, East Lokamany Street, R.S. Puram, Coimbatore - 641002",
+  phone: ["+91 98433 30015", "+91 90808 58522"],
+  menu: {
+    Breakfast: [
+      ["Idly (2 pcs)", 30]
+    ],
+    Lunch: [
+      ["Limited Meals", 60],
+      ["Full Meals", 70],
+      ["Chicken / Egg Biryani", "60 – 70"],
+      ["Veg Rice (Tomato / Tamarind / Curd)", 40]
+    ],
+  }
+},
+
+
+
+{
+  name: "Restaurant Aha",
+  rating: "3.9 / 5",
+  hours: "12:00 PM – 11:00 PM",
+  special: "Non-Veg Meals & Biriyani",
+  address: "81/82, VCV Layout, Sukrawar Pettai, R.S. Puram, Coimbatore - 641002",
+  phone: "+91 72005 64896",
+  menu: {
+    Breakfast: [],
+    Lunch: [
+      ["Veg / Non-Veg Meals", "79 – 159"],
+      ["Egg / Chicken / Mutton Biryani", "159 – 229"]
+    ],
+    Dinner: [
+      ["Mutton Varieties (Chukka / Pepper / Thokku)", 269],
+      ["Fish & Prawn Starters", "249 – 259"],
+      ["Elaneer Payasam", 90],
+      ["Parotta / Chappathi", "25 – 30"]
+    ]
+  }
+},
+],
+
+"Neelambur":[
+  
+
+
+
+{
+  name: "Tea Boy",
+  rating: "4.7 / 5",
+  hours: "06:30 AM – 10:00 PM (Sunday Closed)",
+  address: "1/137-17, GSD Complex, Kathir College Road, Anna Nagar, Neelambur, Coimbatore - 641062",
+  phone: ["+91 73052 69555", "+91 73052 79555"],
+  menu: {
+    Breakfast: [
+      ["Tea (Serves 2)", 50],
+      ["Nattusakkarai Tea (Serves 2)", 50],
+      ["Black Bluster Tea (Serves 2)", 50],
+      ["Special Ginger Tea (Serves 2)", 50]
+    ],
+    Lunch: [
+      ["Fresh Lime Juice", 30],
+      ["Fresh Lime Soda", 30],
+      ["Milkshakes (Chocolate / Butterscotch / Strawberry / Boost / Orange / Mango)", 70]
+    ],
+    Dinner: [
+      ["Lemon Mint Mojito", 70],
+      ["Green Apple Mojito", 70],
+      ["French Fries", 70],
+      ["Veg Momos", 120],
+      ["Bread Omelette", 60]
+    ]
+  }
+},
+
+
+
+{
+  name: "Mappillais Mansatti Varuval",
+  rating: "4.6 / 5",
+  hours: "11:00 AM – 11:00 PM",
+  address: "Cexus Nagar, Neelambur, Coimbatore - 641062",
+  phone: "+91 97513 32893",
+  menu: {
+    Breakfast: [
+      ["Dosa", 30],
+      ["Roast", 90],
+      ["Parotta", 30],
+      ["Omelette", 25],
+      ["Kalaki", 25]
+    ],
+    Lunch: [
+      ["Non-Veg Meals", 100],
+      ["Chicken Biriyani", 200],
+      ["Naatukozhi Biriyani", 300],
+      ["Arisi Paruppu Satham", 120],
+      ["Mushroom Masala", 200],
+      ["Paneer Masala", 250]
+    ],
+    Dinner: [
+      ["Egg Poriyal", 40],
+      ["Ice Cream", 80]
+    ]
+  }
+},
+
+
+
+{
+  name: "TIK TOK",
+  rating: "4.6 / 5",
+  hours: "07:00 AM – 10:00 PM",
+  address: "Kathir College Road / Avinashi Road, Neelambur, Coimbatore - 641062",
+  phone: "+91 99446 02933",
+  menu: {
+    Breakfast: [
+      ["Idly", "Available"],
+      ["Pongal", "Available"],
+      ["Vadai", "Available"],
+      ["Tea / Coffee", "Available"]
+    ],
+    Lunch: [
+      ["Chicken Biriyani", "182 – 190"],
+      ["Egg Biriyani", 130],
+      ["Chicken 65", 150],
+      ["Chicken Chops", 150],
+      ["Chicken 65 / Chukka Biriyani", 185]
+    ],
+    Dinner: [
+      ["Biriyani Combo with Sides", 250],
+      ["Buy 1 Get 1 Chicken Biriyani", 300],
+      ["Unlimited Chicken Biriyani", 190],
+      ["Unlimited Thokku Biriyani", 250],
+      ["Unlimited Shawarma / Chats", "150 – 200"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Deras Bakery",
+  rating: "4.5 / 5",
+  hours: "06:00 AM – 10:00 PM",
+  address: "Avinashi Main Road, Neelambur, Coimbatore - 641062",
+  phone: "+91 77087 58997",
+  menu: {
+    Breakfast: [
+      ["Tea", 25],
+      ["Coffee", 30],
+      ["Ginger / Lemon Tea", 30],
+      ["Black Tea", 15],
+      ["Black Coffee", 20]
+    ],
+    Lunch: [
+      ["Sandwich – Plain Veg", 65],
+      ["Sandwich – Veg Cheese", 75],
+      ["Sandwich – Chilli Cheese", 90],
+      ["Sandwich – Egg", 90],
+      ["Sandwich – Chicken", 140],
+      ["Bread Omelette – Plain", 70],
+      ["Bread Omelette – Cheese", 80],
+      ["Bread Omelette – Chicken", 110]
+    ],
+    Dinner: [
+      ["Thick Shake – Vanilla / Chocolate", 105],
+      ["Thick Shake – Sitaphal / Alphonso Mango", 130],
+      ["Brownies", "Available"],
+      ["Cakes", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Amaravathi Hotel",
+  rating: "4.4 / 5",
+  hours: "07:00 AM – 10:00 PM",
+  address: "1/155, Anna Nagar, Neelambur, Coimbatore - 641062",
+  phone: "+91 90929 20930",
+  menu: {
+    Breakfast: [
+      ["Idli / Dosa / Vada", "50 – 100"]
+    ],
+    Lunch: [
+      ["Meals / Thali", "100 – 200"],
+      ["Biriyani", "150 – 250"]
+    ],
+    Dinner: [
+      ["Tiffins", "50 – 100"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Modern Restaurant",
+  rating: "4.2 / 5",
+  hours: "09:00 AM – 11:00 PM",
+  address: "1/446-C, Avinashi Road, Neelambur, Coimbatore - 641062",
+  phone: "+91 98952 84347",
+  menu: {
+    Lunch: [
+      ["Veg Dry / Gravy", "80 – 120"],
+      ["Fried Rice / Noodles", "110 – 140"],
+      ["Veg Roll", 70],
+      ["Egg Roll", 80],
+      ["Chicken Roll", 90]
+    ],
+    Dinner: [
+      ["Fresh Juices", "50 – 70"],
+      ["Milkshakes", 80],
+      ["Lime Varieties", "25 – 40"],
+      ["Mojito", 60],
+      ["Lassi Varieties", "70 – 80"],
+      ["Ice Cream Shake", "110 – 130"]
+    ]
+  }
+},
+
+
+
+{
+  name: "SKS Hotel",
+  rating: "4.0 / 5",
+  hours: "11:00 AM – 11:00 PM",
+  address: "1/142-12, Kathir College Road, NPS Nagar, Neelambur, Coimbatore - 641062",
+  phone: "+91 98420 14423",
+  menu: {
+    Breakfast: [
+      ["Dosai", 20],
+      ["Roast", 40],
+      ["Omelette", 20],
+      ["Half Boil", 15]
+    ],
+    Lunch: [
+      ["Kuska", 60],
+      ["Chicken Biriyani", 120],
+      ["Beef Biriyani", 90]
+    ],
+    Dinner: [
+      ["Parotta", 15],
+      ["Chapathi", 20],
+      ["Egg Parotta", 75],
+      ["Chicken / Beef Starters", "90 – 150"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Shree Ramdev Dhaba",
+  rating: "3.9 / 5",
+  hours: "11:30 AM – 04:30 PM | 07:00 PM – 11:00 PM",
+  address: "No. 515, Neelambur Avinashi Road, Coimbatore - 641062",
+  phone: ["+91 94860 32283", "+91 89400 69126"],
+  menu: {
+    Lunch: [
+      ["Fried Rice", 70],
+      ["Veg Pulao", 130],
+      ["Plain Rice", 60],
+      ["Jeera Rice", 100],
+      ["Tomato / Lemon / Curd Rice", 80]
+    ],
+    Dinner: [
+      ["Snacks", "40 – 150"],
+      ["Curries", "130 – 320"],
+      ["Roti / Parotta Varieties", "10 – 100"],
+      ["Lassi", 30],
+      ["Curd", 60],
+      ["Salad", 50]
+    ]
+  }
+},
+
+
+
+{
+  name: "Heaven Cafe & Restaurant",
+  rating: "3.8 / 5",
+  hours: "12:00 PM – 11:00 PM (Fri till 10:30 PM)",
+  address: "Coimbatore Goods Transport Association, Neelambur - 641062",
+  phone: "+91 63744 05863",
+  menu: {
+    Lunch: [
+      ["Egg Biriyani", 100],
+      ["Chicken Biriyani", 120],
+      ["Fish Biriyani", 160],
+      ["Mutton / Prawn Biriyani", 180]
+    ],
+    Dinner: [
+      ["Chicken Meals", 100],
+      ["Mutton Meals", 160],
+      ["Fish Meals", 150],
+      ["Mixed Meals", 300],
+      ["Fried Rice", "80 – 250"],
+      ["Noodles", "80 – 200"],
+      ["Grill & Tandoori", "Available"],
+      ["Veg & Non-Veg Starters", "Available"]
+    ]
+  }
+},
+
+
+
+{
+  name: "Kaviyan",
+  rating: "3.8 / 5",
+  address: "NPS Nagar / Avinashi Road, Neelambur, Coimbatore - 641062",
+  phone: "+91 82209 50902",
+  menu: {
+    Breakfast: [
+      ["Idli", 20],
+      ["Dosa", 25],
+      ["Paratha", 20],
+      ["Omelette", 10]
+    ],
+    Lunch: [
+      ["Meals", 50]
+    ],
+    Dinner: [
+      ["Z Bar – Finger Food", "Available"],
+      ["Pizza", "Available"],
+      ["Pasta", "Available"],
+      ["Coffee & Beverages", "Available"]
+    ]
+  }
+},
+]
+
+
+
+};
+
+
+const outputDiv = document.getElementById("output");
+
+for (let areaName in restaurantData) {
+
+ 
+  const areaTitle = document.createElement("div");
+  areaTitle.className = "area-title";
+  areaTitle.innerText = areaName;
+  outputDiv.appendChild(areaTitle);
+
+
+  restaurantData[areaName].forEach(function(hotel){
+
+    let menuHTML = "";
+
+ 
+    for (let section in hotel.menu) {
+      menuHTML += "<div class='menu'><h4>" + section + "</h4>";
+
+      hotel.menu[section].forEach(function(item){
+        menuHTML +=
+          "<div class='menu-item'>" +
+          "<span>" + item[0] + "</span>" +
+          "<span class='price'>₹" + item[1] + "</span>" +
+          "</div>";
+      });
+
+      menuHTML += "</div>";
+    }
+    const hotelCard = document.createElement("div");
+hotelCard.className = "hotel";
+hotelCard.setAttribute("data-name", hotel.name.toLowerCase());
+
+    hotelCard.innerHTML = `
+      <div class="hotel-head">
+        <h3>${hotel.name}</h3>
+        <span class="rating">⭐ ${hotel.rating}</span>
+      </div>
+      <div class="meta"><i class="fas fa-clock"></i> ${hotel.hours}</div>
+        <div class="meta">
+    <div class="meta">
+  <i class="fas fa-location-dot"></i> ${hotel.address}
+</div>
+
+  </div>
+      <div class="special"><strong>Special:</strong> ${hotel.special}</div>
+      ${menuHTML}
+      <div style="margin-top:14px;">
+  <button class="book">Book Now</button>
+  <button class="map-btn">View on Map</button>
+</div>
+
+    `;
+
+   
+    hotelCard.querySelector(".book").onclick = function(){
+      const confirmBooking = confirm("Do you want to book a table at " + hotel.name + "?");
+      if(confirmBooking){
+        alert("Thank you! Booking feature will be enabled soon.");
+      }
+    };
+    hotelCard.querySelector(".map-btn").onclick = function(){
+      const confirmBooking = confirm("Do U Want to see the location in G-map for " + hotel.name + "?");
+      if(confirmBooking){
+      
+        window.open(
+  "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(hotel.address),
+  "_blank"
+);
+
+      }
+    };
+    outputDiv.appendChild(hotelCard);
+  });
+}
+//search bar functioning is written in js
+document.getElementById("searchInput").addEventListener("keyup", function () {
+
+  const searchValue = this.value.toLowerCase();
+  const allHotels = document.querySelectorAll(".hotel");
+
+  allHotels.forEach(function(hotel){
+    const hotelName = hotel.getAttribute("data-name");
+
+    if (hotelName.includes(searchValue)) {
+      hotel.style.display = "block";
+    } else {
+      hotel.style.display = "none";
+    }
+  });
+
+});
+
+</script>
+
+</body>
+</html>
